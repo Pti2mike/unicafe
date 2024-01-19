@@ -14,6 +14,19 @@ const Display = (props) => (
   </div>
 );
 
+const Statistics = ({ good, neutral, bad, average, total, positiveReturn }) => {
+  return (
+    <div>
+      <Display name="good" value={good} />
+      <Display name="neutral" value={neutral} />
+      <Display name="bad" value={bad} />
+      <Display name="total" value={total} />
+      <Display name="average" value={average} />
+      <Display name="positive" value={`${positiveReturn} %`} />
+    </div>
+  );
+};
+
 const App = () => {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
@@ -43,8 +56,6 @@ const App = () => {
     setPositiveReturn((good - bad) / (total + 1));
   };
 
-  console.log("Positive: ", positiveReturn);
-
   return (
     <div>
       <Header title="Give Feedback" />
@@ -53,12 +64,14 @@ const App = () => {
       <Button name="bad" handleClick={handleClickBad} />
 
       <Header title="Statistics" />
-      <Display name="good" value={good} />
-      <Display name="neutral" value={neutral} />
-      <Display name="bad" value={bad} />
-      <Display name="total" value={total} />
-      <Display name="average" value={average} />
-      <Display name="positive" value={`${positiveReturn} %`} />
+      <Statistics
+        good={good}
+        neutral={neutral}
+        bad={bad}
+        total={total}
+        average={average}
+        positiveReturn={positiveReturn}
+      />
     </div>
   );
 };
