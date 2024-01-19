@@ -8,10 +8,12 @@ const Button = (props) => (
   </button>
 );
 
-const Display = (props) => (
-  <div>
-    {props.name} {props.value}
-  </div>
+const StatisticLine = (props) => (
+  <tr>
+    <td>
+      {props.name} {props.value}
+    </td>
+  </tr>
 );
 
 const Statistics = ({ good, neutral, bad, average, total, positiveReturn }) => {
@@ -19,14 +21,16 @@ const Statistics = ({ good, neutral, bad, average, total, positiveReturn }) => {
     return <p>No feedback given</p>;
   }
   return (
-    <div>
-      <Display name="good" value={good} />
-      <Display name="neutral" value={neutral} />
-      <Display name="bad" value={bad} />
-      <Display name="total" value={total} />
-      <Display name="average" value={average} />
-      <Display name="positive" value={`${positiveReturn} %`} />
-    </div>
+    <table>
+      <tbody>
+        <StatisticLine name="good" value={good} />
+        <StatisticLine name="neutral" value={neutral} />
+        <StatisticLine name="bad" value={bad} />
+        <StatisticLine name="total" value={total} />
+        <StatisticLine name="average" value={average} />
+        <StatisticLine name="positive" value={`${positiveReturn} %`} />
+      </tbody>
+    </table>
   );
 };
 
@@ -42,21 +46,21 @@ const App = () => {
     setGood(good + 1);
     setTotal(total + 1);
     setAverage((good + 1 - bad) / (total + 1));
-    setPositiveReturn((good + 1) / (total + 1));
+    setPositiveReturn(((good + 1) / (total + 1)) * 100);
   };
 
   const handleClickNeutral = () => {
     setNeutral(neutral + 1);
     setTotal(total + 1);
     setAverage((good - bad) / (total + 1));
-    setPositiveReturn(good / (total + 1));
+    setPositiveReturn((good / (total + 1)) * 100);
   };
 
   const handleClickBad = () => {
     setBad(bad + 1);
     setTotal(total + 1);
     setAverage((good - bad - 1) / (total + 1));
-    setPositiveReturn((good - bad) / (total + 1));
+    setPositiveReturn(((good - bad) / (total + 1)) * 100);
   };
 
   return (
