@@ -18,16 +18,33 @@ const App = () => {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [average, setAverage] = useState(0);
+  const [positiveReturn, setPositiveReturn] = useState(0);
 
   const handleClickGood = () => {
     setGood(good + 1);
+    setTotal(total + 1);
+    setAverage((good + 1 - bad) / (total + 1));
+    setPositiveReturn((good + 1) / (total + 1));
   };
+
   const handleClickNeutral = () => {
     setNeutral(neutral + 1);
+    setTotal(total + 1);
+    setAverage((good - bad) / (total + 1));
+    setPositiveReturn(good / (total + 1));
   };
+
   const handleClickBad = () => {
     setBad(bad + 1);
+    setTotal(total + 1);
+    setAverage((good - bad - 1) / (total + 1));
+    setPositiveReturn((good - bad) / (total + 1));
   };
+
+  console.log("Positive: ", positiveReturn);
+
   return (
     <div>
       <Header title="Give Feedback" />
@@ -39,6 +56,9 @@ const App = () => {
       <Display name="good" value={good} />
       <Display name="neutral" value={neutral} />
       <Display name="bad" value={bad} />
+      <Display name="total" value={total} />
+      <Display name="average" value={average} />
+      <Display name="positive" value={`${positiveReturn} %`} />
     </div>
   );
 };
